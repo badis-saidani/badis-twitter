@@ -7,9 +7,7 @@ import Timeline from './components/Timeline';
 function App() {
   const [user, setUser] = useState({});
   const [isUserSelected, setIsUserSelected] = useState(false);
-
-  const { innerWidth: width, innerHeight: height } = window;
-
+  
   return (
     <div className="App" >
       <NavBar setUser={setUser} setIsUserSelected={setIsUserSelected}/>

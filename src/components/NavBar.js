@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from "axios";
 import Select from 'react-select'
 import TwitterLogo from '../images/TwitterLogo.png';
@@ -11,7 +11,10 @@ const NavBar = params => {
     const [query, setQuery] = useState("");
     const [user, setUser] = useState({});
     const [isUserSelected, setIsUserSelected] = useState(false);
+    const [seconds, setSeconds] = useState(60);
     const options = [];
+
+    
 
     
     userList.forEach(x => {
@@ -39,13 +42,8 @@ const NavBar = params => {
         setQuery("soccer");
       
         if (query !== "") {
-         
-            const APP_ID = "4e9f05eb";
-            const APP_KEY = "9b904d703fa0d46a88ce1ac63f29f498";
-          
-            const url2 = `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`;
-
-            const result = await Axios.get('https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=MLS', {
+    
+            const result = await Axios.get(url, {
                 headers: {
                     consumer_key: 'ED193gYLjZ6ILFApKWdvvmq3H',
                     consumer_secret: 'OTTFyWVrPBs4rX1GZkIfU8XUC8O2sRIZWOgnShjEogxX7OswwN',
@@ -76,13 +74,34 @@ const NavBar = params => {
 
     
 
-    const handleChange = selectedOption => {
+    const handleChange = (selectedOption) => {
       
         params.setUser(selectedOption.data);
         params.setIsUserSelected(true);
+        setIsUserSelected(true);
+        
         getData();
 
       };
+
+      useEffect(() => {
+        setTimeout(() => {
+            if (isUserSelected) {
+                if (seconds>0) {
+                    setSeconds(seconds - 1);
+                }else{
+                    setIsUserSelected(false);
+                    params.setIsUserSelected(false);
+                    params.setUser({});
+                }
+                
+            } else {
+                
+                setSeconds(60);
+            }
+            
+        }, 1000);
+      });
 
     return (
         <div  >
@@ -102,7 +121,7 @@ const NavBar = params => {
                 </div>
                 <div style={{ width: "30%"}}>
                     <div class="form-inline" style={{ float:"right", paddingRight:30 }}>
-                    <h1>60  </h1>
+                    <h1>{seconds}  </h1>
                     <FontAwesomeIcon icon={faClock} size="lg" />
                     </div>
                     
@@ -110,6 +129,9 @@ const NavBar = params => {
             </header>
         </div>
     );
+
+    
+
 }
 
 

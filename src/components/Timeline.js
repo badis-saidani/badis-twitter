@@ -10,6 +10,7 @@ const Timeline = ({ user, isUserSelected }) => {
     function increment() {
         setCount(count + 1);
     }
+    
     return (
 
         <div className="mx-1 mt-2 tweetList">
@@ -27,7 +28,7 @@ const Timeline = ({ user, isUserSelected }) => {
             <div className="m-3">
                 
             <h3 className="font-weight-bold">
-                {count>0? <span>There you go</span>: <span>What? No Tweets yet?</span>}
+                {(isUserSelected && count>0)? <span>There you go</span>: <span>What? No Tweets yet?</span>}
                 </h3>
             <p>
               This empty timeline won’t be around for long. Choose a user, then click Load button and you’ll see Tweets show up here.
@@ -36,7 +37,7 @@ const Timeline = ({ user, isUserSelected }) => {
                 <div class="form-inline" >
                     <div class="card" style={{ margin: 50 }}>
 
-                        {count > 0 ?
+                        {(isUserSelected && count>0) ?
                             <div color="blue">
                                 <h5>{user.status.created_at}</h5><br /><br />
                                 <p>{user.status.text}</p><br /><br /><br /><br />
@@ -54,8 +55,8 @@ const Timeline = ({ user, isUserSelected }) => {
 
                     <div class="card" style={{ margin: 50 }}>
 
-                        {count > 0 ?
-                            <div paddingBottom="0px" color="blue">
+                        {(isUserSelected && count>0)?
+                            <div  color="blue">
                                 {user.status.create_at}<br />
                                 {user.status.text}<br />
 
@@ -71,8 +72,8 @@ const Timeline = ({ user, isUserSelected }) => {
                     </div>
                     <div class="card" style={{ margin: 50 }}>
 
-                        {count > 0 ?
-                            <div paddingBottom="0px" color="blue">
+                        {(isUserSelected && count>0) ?
+                            <div  color="blue">
                                 {user.status.create_at}<br />
                                 {user.status.text}<br />
 
